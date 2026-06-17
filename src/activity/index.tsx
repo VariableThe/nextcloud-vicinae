@@ -1,4 +1,4 @@
-import { Action, ActionPanel, List } from "@vicinae/api";
+import { Action, ActionPanel, List, Icon } from "@vicinae/api";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { capitalize } from "../utils";
 import { type Activity, useActivity } from "./hooks";
@@ -8,11 +8,22 @@ export function Activity() {
   const { activity, isLoading, pagination } = useActivity();
 
   return (
-    <List isLoading={isLoading} pagination={pagination}>
+    <List isLoading={isLoading}>
       <List.Section title="All activities" subtitle={String(activity.length)}>
         {activity.map((result) => (
           <Item key={result.activityId + result.datetime} item={result} />
         ))}
+        {pagination.hasMore && (
+          <List.Item
+            title="Load more activities..."
+            icon={Icon.ArrowDown}
+            actions={
+              <ActionPanel>
+                <Action title="Load More" onAction={pagination.onLoadMore} icon={Icon.ArrowDown} />
+              </ActionPanel>
+            }
+          />
+        )}
       </List.Section>
     </List>
   );
