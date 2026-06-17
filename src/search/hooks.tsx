@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 import { useQuery, webdavRequest } from "../nextcloud";
 import { getPreferences } from "../preferences";
 import { getPreferenceValues } from "@vicinae/api";
-import { SearchPreferences } from "../types";
+import { Preferences } from "../types";
 
-const { files_owner } = getPreferenceValues<SearchPreferences>();
+const { files_owner } = getPreferenceValues<Preferences>();
 
 type propStat = {
   "d:prop": { "oc:fileid": number; "d:getcontenttype": string; "oc:size": number };
