@@ -13,7 +13,7 @@ type ExtensionPreferences = {
 	"username"?: string;
 
 	/** App Password - Go to Nextcloud > Settings > Security > Devices & sessions, and create a new app password */
-	"password"?: string;
+	"app_password"?: string;
 
 	/** Search Scope - Specify search scope (e.g. Documents) or leave empty to search all files */
 	"scope": string;

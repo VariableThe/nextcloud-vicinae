@@ -75,7 +75,7 @@
       "placeholder": "akira"
     },
     {
-      "name": "password",
+      "name": "app_password",
       "type": "textfield",
       "required": true,
       "title": "App Password",
