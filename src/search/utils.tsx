@@ -20,7 +20,7 @@ export function getIcon(contentType?: string) {
       icon = Icon.BlankDocument;
       break;
     case "application":
-      icon = Icon.Document;
+      icon = Icon.BlankDocument;
       break;
   }
   return { source: icon, tintColor: Color.Blue };

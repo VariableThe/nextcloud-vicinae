@@ -29,7 +29,7 @@ export function getIcon(activityType: string) {
       break;
     case "deck":
     case "deck_card_description":
-      source = Icon.List;
+      source = Icon.BulletPoints;
       break;
     case "public_links":
     case "shared":
