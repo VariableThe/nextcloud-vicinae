@@ -65,8 +65,8 @@
       "placeholder": "akira"
     },
     {
-      "name": "app_password",
-      "type": "password",
+      "name": "password",
+      "type": "textfield",
       "required": true,
       "title": "App Password",
       "description": "Go to Nextcloud > Settings > Security > Devices & sessions, and create a new app password",
