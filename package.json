@@ -16,17 +16,7 @@
       "title": "Search Files",
       "subtitle": "Nextcloud",
       "description": "Search files.",
-      "mode": "view",
-      "preferences": [
-        {
-          "name": "files_owner",
-          "title": "Files Owner",
-          "placeholder": "username",
-          "description": "This is the username owning files (usually same as username)",
-          "type": "textfield",
-          "required": false
-        }
-      ]
+      "mode": "view"
     },
     {
       "name": "favorites",
@@ -81,6 +71,14 @@
       "title": "App Password",
       "description": "Go to Nextcloud > Settings > Security > Devices & sessions, and create a new app password",
       "placeholder": "supersecret"
+    },
+    {
+      "name": "files_owner",
+      "title": "Files Owner",
+      "placeholder": "username",
+      "description": "This is the username owning files (usually same as username)",
+      "type": "textfield",
+      "required": false
     },
     {
       "name": "scope",

@@ -2,10 +2,7 @@ import path from "path";
 import { useCallback, useState } from "react";
 import { useQuery, webdavRequest } from "../nextcloud";
 import { getPreferences } from "../preferences";
-import { getPreferenceValues } from "@vicinae/api";
-import { SearchPreferences } from "../types";
-
-const { files_owner } = getPreferenceValues<SearchPreferences>();
+import { Preferences } from "../types";
 
 type propStat = {
   "d:prop": { "oc:fileid": number; "d:getcontenttype": string; "oc:size": number };
@@ -27,7 +24,7 @@ export function useSearch() {
   };
 }
 
-function makeBodyForSearch({ username, query, scope = "" }: { username: string; query: string; scope?: string }) {
+function makeBodyForSearch({ username, files_owner, query, scope = "" }: { username: string; files_owner?: string; query: string; scope?: string }) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <d:searchrequest xmlns:d="DAV:" xmlns:oc="http://owncloud.org/ns">
   <d:basicsearch>
@@ -61,8 +58,8 @@ function makeBodyForSearch({ username, query, scope = "" }: { username: string; 
 async function performSearch(signal: AbortSignal, query?: string): Promise<SearchResult[]> {
   if (!query || query.length === 0) return [];
 
-  const { scope, username } = getPreferences();
-  const body = makeBodyForSearch({ username, query, scope });
+  const { scope, username, files_owner } = getPreferences();
+  const body = makeBodyForSearch({ username, files_owner, query, scope });
   const items = await webdavRequest({ body, signal, method: "SEARCH" });
 
   const availableItems = items.filter((item) => {

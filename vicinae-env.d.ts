@@ -13,7 +13,10 @@ type ExtensionPreferences = {
 	"username"?: string;
 
 	/** App Password - Go to Nextcloud > Settings > Security > Devices & sessions, and create a new app password */
-	"password"?: string;
+	"app_password"?: string;
+
+	/** Files Owner - This is the username owning files (usually same as username) */
+	"files_owner": string;
 
 	/** Search Scope - Specify search scope (e.g. Documents) or leave empty to search all files */
 	"scope": string;
@@ -24,8 +27,7 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Command: Search Files */
 	export type Search = ExtensionPreferences & {
-		/** Files Owner - This is the username owning files (usually same as username) */
-		"files_owner": string;
+		
 	}
 
 	/** Command: List Favorites */

@@ -1,7 +1,7 @@
 import { Action, ActionPanel, Icon, List } from "@vicinae/api";
 import { type Note, useNotes } from "../hooks";
 import { NoteDetails } from "./NoteDetails";
-import { BASE_URL } from "../../config";
+import { getBaseUrl } from "../../config";
 
 export function Notes() {
   const { notes, isLoading } = useNotes();
@@ -18,7 +18,7 @@ export function Notes() {
 }
 
 function NoteItem({ note }: { note: Note }) {
-  const noteUrl = `${BASE_URL}/apps/notes/note/${note.id}`;
+  const noteUrl = `${getBaseUrl()}/apps/notes/note/${note.id}`;
 
   return (
     <List.Item

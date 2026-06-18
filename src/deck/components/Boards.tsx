@@ -1,7 +1,7 @@
 import { Action, ActionPanel, Icon, List } from "@vicinae/api";
 import { type Board, useBoards } from "../hooks";
 import { Stacks } from "./Stacks";
-import { BASE_URL } from "../../config";
+import { getBaseUrl } from "../../config";
 
 export function Boards() {
   const { boards, isLoading } = useBoards();
@@ -18,7 +18,7 @@ export function Boards() {
 }
 
 function Board({ board }: { board: Board }) {
-  const boardUrl = `${BASE_URL}/apps/deck/#/board/${board.id}`;
+  const boardUrl = `${getBaseUrl()}/apps/deck/#/board/${board.id}`;
   const color = board.color;
 
   return (
