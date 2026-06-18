@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { parseLinkHeader } from "@web3-storage/parse-link-header";
 import { XMLParser } from "fast-xml-parser";
-import { API_HEADERS, BASE_URL } from "../config";
+import { getApiHeaders, getBaseUrl } from "../config";
 
 export function useActivity() {
   const [data, setData] = useState<Activity[]>([]);
@@ -15,7 +15,7 @@ export function useActivity() {
       const response = await fetch(url, {
         method: "GET",
         headers: {
-          ...API_HEADERS,
+          ...getApiHeaders(),
           "OCS-APIRequest": "true",
         },
       });
@@ -70,7 +70,7 @@ export function useActivity() {
   }
 
   useEffect(() => {
-    fetchPage(`${BASE_URL}/ocs/v2.php/apps/activity/api/v2/activity?limit=200`, false);
+    fetchPage(`${getBaseUrl()}/ocs/v2.php/apps/activity/api/v2/activity?limit=200`, false);
   }, []);
 
   const onLoadMore = () => {

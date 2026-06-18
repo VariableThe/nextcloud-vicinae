@@ -1,7 +1,7 @@
 import { Action, ActionPanel, Color, Icon, List } from "@vicinae/api";
 import path from "path";
 import { Favorite, useFavorites } from "./hooks";
-import { BASE_URL } from "../config";
+import { getBaseUrl } from "../config";
 
 export function Favorites() {
   const { favorites, isLoading } = useFavorites();
@@ -19,8 +19,8 @@ export function Favorites() {
 
 function Item({ result }: { result: Favorite }) {
   const url = path.extname(result.filename)
-    ? `${BASE_URL}/apps/files/?dir=${encodeURI(result.dirname)}&view=files`
-    : `${BASE_URL}/apps/files/?dir=${encodeURI(result.fullpath)}&view=files`;
+    ? `${getBaseUrl()}/apps/files/?dir=${encodeURI(result.dirname)}&view=files`
+    : `${getBaseUrl()}/apps/files/?dir=${encodeURI(result.fullpath)}&view=files`;
 
   return (
     <List.Item

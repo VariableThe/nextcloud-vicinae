@@ -2,7 +2,7 @@ import { Action, ActionPanel, List } from "@vicinae/api";
 import filesize from "file-size";
 import { SearchResult, useSearch } from "./hooks";
 import { getIcon } from "./utils";
-import { BASE_URL } from "../config";
+import { getBaseUrl } from "../config";
 
 export function Search() {
   const { results, isLoading, search } = useSearch();
@@ -20,8 +20,8 @@ export function Search() {
 
 function Item({ result }: { result: SearchResult }) {
   const url = result.contentType
-    ? `${BASE_URL}/apps/files/?dir=${encodeURI(result.dirname)}&openfile=${result.fileId}`
-    : `${BASE_URL}/apps/files/?dir=${encodeURI(result.fullpath)}&view=files`;
+    ? `${getBaseUrl()}/apps/files/?dir=${encodeURI(result.dirname)}&openfile=${result.fileId}`
+    : `${getBaseUrl()}/apps/files/?dir=${encodeURI(result.fullpath)}&view=files`;
   const approxFileSize = filesize(result.size).human("si");
 
   return (
