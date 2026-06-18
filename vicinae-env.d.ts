@@ -6,7 +6,19 @@
  */
 
 type ExtensionPreferences = {
-  /** Search Scope - Specify search scope (e.g. Documents) or leave empty to search all files */
+  /** Hostname - Hostname of Nextcloud instance */
+	"hostname"?: string;
+
+	/** Username - Your username */
+	"username"?: string;
+
+	/** App Password - Go to Nextcloud > Settings > Security > Devices & sessions, and create a new app password */
+	"app_password"?: string;
+
+	/** Files Owner - This is the username owning files (usually same as username) */
+	"files_owner": string;
+
+	/** Search Scope - Specify search scope (e.g. Documents) or leave empty to search all files */
 	"scope": string;
 }
 

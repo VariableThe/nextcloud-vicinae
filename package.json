@@ -49,6 +49,38 @@
   ],
   "preferences": [
     {
+      "name": "hostname",
+      "type": "textfield",
+      "required": true,
+      "title": "Hostname",
+      "description": "Hostname of Nextcloud instance",
+      "placeholder": "cloud.example.com"
+    },
+    {
+      "name": "username",
+      "type": "textfield",
+      "required": true,
+      "title": "Username",
+      "description": "Your username",
+      "placeholder": "akira"
+    },
+    {
+      "name": "app_password",
+      "type": "password",
+      "required": true,
+      "title": "App Password",
+      "description": "Go to Nextcloud > Settings > Security > Devices & sessions, and create a new app password",
+      "placeholder": "supersecret"
+    },
+    {
+      "name": "files_owner",
+      "title": "Files Owner",
+      "placeholder": "username",
+      "description": "This is the username owning files (usually same as username)",
+      "type": "textfield",
+      "required": false
+    },
+    {
       "name": "scope",
       "type": "textfield",
       "required": false,
