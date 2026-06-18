@@ -1,3 +1,5 @@
 import { Favorites } from "./favorites/Favorites";
 
-export default Favorites;
+import { withNextcloudAuth } from "./auth/provider";
+
+export default withNextcloudAuth(Favorites);

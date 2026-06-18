@@ -1,3 +1,5 @@
 import { Notes } from "./notes/components/Notes";
 
-export default Notes;
+import { withNextcloudAuth } from "./auth/provider";
+
+export default withNextcloudAuth(Notes);

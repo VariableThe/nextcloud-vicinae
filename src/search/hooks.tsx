@@ -9,9 +9,12 @@ type propStat = {
   "d:status": string;
 };
 
+import { useAuth } from "../auth/provider";
+
 export function useSearch() {
+  const { credentials } = useAuth();
   const [query, setQuery] = useState<string>();
-  const { data, isLoading } = useQuery((signal) => performSearch(signal, query), [query]);
+  const { data, isLoading } = useQuery((signal) => performSearch(signal, query, credentials?.username || ""), [query, credentials?.username]);
 
   const search = useCallback((query: string) => {
     setQuery(query);
@@ -24,7 +27,7 @@ export function useSearch() {
   };
 }
 
-function makeBodyForSearch({ username, files_owner, query, scope = "" }: { username: string; files_owner?: string; query: string; scope?: string }) {
+function makeBodyForSearch({ username, query, scope = "" }: { username: string; query: string; scope?: string }) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <d:searchrequest xmlns:d="DAV:" xmlns:oc="http://owncloud.org/ns">
   <d:basicsearch>
@@ -38,7 +41,7 @@ function makeBodyForSearch({ username, files_owner, query, scope = "" }: { usern
     </d:select>
     <d:from>
       <d:scope>
-        <d:href>/files/${encodeURIComponent(files_owner || username)}/${scope.replace(/^\/+/, "")}</d:href>
+        <d:href>/files/${encodeURIComponent(username)}/${scope.replace(/^\/+/, "")}</d:href>
         <d:depth>infinity</d:depth>
       </d:scope>
     </d:from>
@@ -55,11 +58,11 @@ function makeBodyForSearch({ username, files_owner, query, scope = "" }: { usern
 </d:searchrequest>`;
 }
 
-async function performSearch(signal: AbortSignal, query?: string): Promise<SearchResult[]> {
+async function performSearch(signal: AbortSignal, query: string | undefined, username: string): Promise<SearchResult[]> {
   if (!query || query.length === 0) return [];
 
-  const { scope, username, files_owner } = getPreferences();
-  const body = makeBodyForSearch({ username, files_owner, query, scope });
+  const { scope } = getPreferences();
+  const body = makeBodyForSearch({ username, query, scope });
   const items = await webdavRequest({ body, signal, method: "SEARCH" });
 
   const availableItems = items.filter((item) => {

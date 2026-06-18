@@ -1,3 +1,5 @@
 import { Activity } from "./activity/index";
 
-export default Activity;
+import { withNextcloudAuth } from "./auth/provider";
+
+export default withNextcloudAuth(Activity);
