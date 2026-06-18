@@ -24,8 +24,7 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Command: Search Files */
 	export type Search = ExtensionPreferences & {
-		/** Files Owner - This is the username owning files (usually same as username) */
-		"files_owner": string;
+		
 	}
 
 	/** Command: List Favorites */

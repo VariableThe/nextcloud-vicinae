@@ -3,8 +3,5 @@ export interface Preferences {
   username: string;
   app_password: string;
   scope?: string;
-}
-
-export interface SearchPreferences {
   files_owner?: string;
 }

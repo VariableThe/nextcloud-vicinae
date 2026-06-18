@@ -1,12 +1,17 @@
-import { environment, getPreferenceValues } from "@vicinae/api";
-import { Preferences } from "./types";
+import { environment } from "@vicinae/api";
+import { getPreferences } from "./preferences";
 
 const { hostname, username, app_password } = getPreferenceValues<Preferences>();
 const cleanHost = hostname.endsWith("/") ? hostname.slice(0, -1) : hostname;
 export const BASE_URL = cleanHost.startsWith("http") ? cleanHost : `https://${cleanHost}`;
 
-const raycastVersion = (environment as any).raycastVersion || "1.0.0";
-const vicinaeVersion = (environment as any).vicinaeVersion || "1.0.0";
+export function getBaseUrl(): string {
+  if (baseUrlCache) return baseUrlCache;
+  const { hostname } = getPreferences();
+  const cleanHost = hostname.endsWith("/") ? hostname.slice(0, -1) : hostname;
+  baseUrlCache = cleanHost.startsWith("http") ? cleanHost : `https://${cleanHost}`;
+  return baseUrlCache;
+}
 
 export const API_HEADERS = {
   Authorization: "Basic " + Buffer.from(username + ":" + app_password).toString("base64"),
