@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { parseLinkHeader } from "@web3-storage/parse-link-header";
 import { XMLParser } from "fast-xml-parser";
-import { getApiHeaders, getBaseUrl } from "../config";
+import { fetchNextcloud, getBaseUrl, resolveNextcloudUrl } from "../config";
 
 export function useActivity() {
   const [data, setData] = useState<Activity[]>([]);
@@ -12,17 +12,16 @@ export function useActivity() {
   async function fetchPage(url: string, isNext: boolean) {
     try {
       setIsLoading(true);
-      const response = await fetch(url, {
+      const response = await fetchNextcloud(url, {
         method: "GET",
         headers: {
-          ...getApiHeaders(),
           "OCS-APIRequest": "true",
         },
       });
 
       const linkHeader = response.headers.get("Link");
       const parsed = parseLinkHeader(linkHeader);
-      const nextUrl = parsed?.next?.url || null;
+      const nextUrl = parsed?.next?.url ? resolveNextcloudUrl(parsed.next.url, response.url || url) : null;
 
       const result = await response.text();
       if (!result) {

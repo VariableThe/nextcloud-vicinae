@@ -1,7 +1,7 @@
 import { showToast, Toast } from "@vicinae/api";
 import { XMLParser } from "fast-xml-parser";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { getApiHeaders, getBaseUrl } from "./config";
+import { fetchNextcloud, getBaseUrl } from "./config";
 
 type Fetcher<R> = (signal: AbortSignal) => Promise<R>;
 
@@ -16,9 +16,8 @@ export function useNextcloudJsonArray<T>(base: string) {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const response = await fetch(`${getBaseUrl()}/apps/${base}`, {
+        const response = await fetchNextcloud(`${getBaseUrl()}/apps/${base}`, {
           headers: {
-            ...getApiHeaders(),
             "OCS-APIRequest": "true",
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -122,10 +121,9 @@ export async function webdavRequest({
   base?: string;
   method: string;
 }) {
-  const response = await fetch(`${getBaseUrl()}/remote.php/dav/${encodeURI(base)}`, {
+  const response = await fetchNextcloud(`${getBaseUrl()}/remote.php/dav/${encodeURI(base)}`, {
     method,
     headers: {
-      ...getApiHeaders(),
       "Content-Type": "text/xml",
     },
     body,
