@@ -1,5 +1,6 @@
 import { environment } from "@vicinae/api";
 import { getPreferences } from "./preferences";
+import { fetchWithSafeRedirects, parseConfiguredBaseUrl, resolveAllowedUrl } from "./security";
 
 let baseUrlCache: string | null = null;
 let apiHeadersCache: Record<string, string> | null = null;
@@ -7,9 +8,19 @@ let apiHeadersCache: Record<string, string> | null = null;
 export function getBaseUrl(): string {
   if (baseUrlCache) return baseUrlCache;
   const { hostname } = getPreferences();
-  const cleanHost = hostname.endsWith("/") ? hostname.slice(0, -1) : hostname;
-  baseUrlCache = cleanHost.startsWith("http") ? cleanHost : `https://${cleanHost}`;
+  baseUrlCache = parseConfiguredBaseUrl(hostname);
   return baseUrlCache;
+}
+
+export async function fetchNextcloud(input: string, init: RequestInit = {}): Promise<Response> {
+  const baseUrl = getBaseUrl();
+  const headers = new Headers(getApiHeaders());
+  new Headers(init.headers).forEach((value, key) => headers.set(key, value));
+  return fetchWithSafeRedirects(input, baseUrl, { ...init, headers });
+}
+
+export function resolveNextcloudUrl(input: string, relativeTo = getBaseUrl()): string {
+  return resolveAllowedUrl(input, getBaseUrl(), relativeTo);
 }
 
 export function getApiHeaders() {
